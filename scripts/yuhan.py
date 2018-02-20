@@ -167,7 +167,7 @@ def onPeriodic():
                         if (training_data['file'] != None):
                                 training_data['file'].close()
 
-                        training_data['file'] = open(label+'_'+datetime.datetime.now().strftime("%Y-%m-%d@%H:%M:%S")+'.csv','w+')
+                        training_data['file'] = open(label+'_'+datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S")+'.csv','w+')
                         training_data['csv_writer'] = csv.writer(training_data['file'])
 
                 elif (mode == 'predicting'):
