@@ -90,7 +90,7 @@ def main():
     test_accuracy = np.mean(y_pred_test == test_y)
 
     print('This test accuracy: ' + str(test_accuracy))
-    best_model.toFile('rowan_rest_grip_flex_linear_classifier_3_' + str(int(test_accuracy*100)) + 'p.csv')
+    best_model.toFile('greg_rest_grip_flex_linear_classifier_1_' + str(int(test_accuracy*100)) + 'p.csv')
 
 if __name__ == '__main__':
     main()
