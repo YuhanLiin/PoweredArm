@@ -1,17 +1,29 @@
-
+import os
 import csv
 import numpy as np
-from linear_classifier import LinearClassifier
+from Linear_Classifier.linear_classifier import LinearClassifier
 
-master_file_name = '../EMG_Training_Data/master_training_data.csv'
+def make_master_data():
+    path = 'EMG_Training_Data'
+    csv_files = (os.path.join(path, name) for name in os.listdir(path) if name.lower().endswith('.csv'))
+    master_data = []
+
+    for csv_file in csv_files:
+        f = open(csv_file, 'r')
+        reader = csv.reader(f)
+        
+        contents = list(reader)
+        num_rows = len(contents)
+
+        for row in contents[int(0.1*num_rows):int(0.9*num_rows)]:
+            master_data.append(row)
+
+        f.close()
+
+    return master_data
 
 def get_master_data():
-    f = open(master_file_name, 'r')
-    reader = csv.reader(f)
-    data = list(reader)
-    f.close()
-
-    data = np.array(data)
+    data = np.array(make_master_data())
     data = data.astype(float)
     
     X = data[:,:-1]
@@ -90,7 +102,7 @@ def main():
     test_accuracy = np.mean(y_pred_test == test_y)
 
     print('This test accuracy: ' + str(test_accuracy))
-    best_model.toFile('greg_rest_grip_flex_linear_classifier_1_' + str(int(test_accuracy*100)) + 'p.csv')
+    best_model.toFile('Linear_Classifier/linear_classifier_1_' + str(int(test_accuracy*100)) + 'p.csv')
 
 if __name__ == '__main__':
     main()

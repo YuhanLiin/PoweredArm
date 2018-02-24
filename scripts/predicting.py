@@ -29,6 +29,7 @@ def proc_emg(emg, moving, times = []):
     
     emg_features = add_one
     gesture = classifier.predict(emg_features)[0]
+    print (gesture)
     do_gesture(gesture)
 
 
@@ -43,7 +44,7 @@ def onPeriodic():
     if not(myo.isUnlocked()):                
         ## START THE PINS
         motors.startHand()
-        classifier.fromFile('Linear_Classifier/greg_rest_grip_flex_linear_classifier_1_99p.csv')
+        classifier.fromFile('Linear_Classifier/linear_classifier_1_99p.csv')
 
         myo.unlock("hold")
         myo.start_raw()
