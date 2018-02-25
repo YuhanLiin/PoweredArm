@@ -4,23 +4,12 @@ import os
 import datetime
 import csv
 import numpy as np
+from .common.gesture import Gesture
 
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
 
-# Label options: 'rest', 'grip', 'flex', TODO: 'key'
-label = 'flex'
-
-# Labels stored in csv as integers: rest -> 0, grip -> 1, flex -> 2 
-def label_to_int(gesture_label):
-    if (gesture_label == 'rest'):
-            return 0
-    if (gesture_label == 'grip'):
-            return 1
-    if (gesture_label == 'flex'):
-            return 2
-    raise ValueError("Invalid gesture %s" % gesture_label)
-
+gesture = Gesture.Flex
 
 # Display emg data in human-readable way (Unused for now)
 def print_emg(emg):
@@ -34,7 +23,7 @@ def print_emg(emg):
 # Main emg processing function
 def proc_emg(emg, moving, times = []):
     print_emg(emg)
-    training_data['csv_writer'].writerow(list(emg)+[label_to_int(label)])
+    training_data['csv_writer'].writerow(list(emg)+[gesture.value])
 
 
 # onPeriodic() is called periodically while the myo is connected.
@@ -49,7 +38,7 @@ def onPeriodic():
         if (training_data['file'] != None):
                 training_data['file'].close()
 
-        training_data['file'] = open("EMG_Training_Data/"+label+'_'+datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S")+'.csv','w+')
+        training_data['file'] = open("EMG_Training_Data/"+gesture.name+'_'+datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S")+'.csv','w+')
         training_data['csv_writer'] = csv.writer(training_data['file'])
 
         myo.unlock("hold")

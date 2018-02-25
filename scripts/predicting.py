@@ -5,20 +5,21 @@ import csv
 import numpy as np
 from Linear_Classifier import linear_classifier
 from mechanics import motors
+from .common.gesture import Gesture
 
-classifier = linear_classifier.LinearClassifier(9,3)
+classifier = linear_classifier.LinearClassifier(9, len(Gesture))
 
 # Control motors by gesture
 def do_gesture(gesture):
     # Rest: turn motor off
-    if (gesture == 0):
+    if (gesture == Gesture.Rest.value):
             motors.openGrip()
     # Grip: move motor forward
-    if (gesture == 1):
+    if (gesture == Gesture.Grip.value):
             motors.closedGrip()
     # Flex: move motor backward
-    if (gesture == 2):
-            motors.keyGrip()
+    if (gesture == Gesture.Flex.value):
+            motors.keyGrip()    #DAFUQ
 
 # Main emg processing function
 def proc_emg(emg, moving, times = []):    
