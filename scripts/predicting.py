@@ -23,6 +23,7 @@ def do_gesture(gesture):
 
 # Main emg processing function
 def proc_emg(emg, moving, times = []):    
+    # Put a 1 onto the end of the EMG array
     add_one = np.ones((1,9))
     emg_features = np.array(list(emg)).astype(float)
     emg_features /= 1000.0

@@ -1,10 +1,10 @@
 import os
 import csv
+from sys import argv
 import numpy as np
 from Linear_Classifier.linear_classifier import LinearClassifier
 
-def make_master_data():
-    path = 'EMG_Training_Data'
+def make_master_data(path):
     csv_files = (os.path.join(path, name) for name in os.listdir(path) if name.lower().endswith('.csv'))
     master_data = []
 
@@ -22,8 +22,8 @@ def make_master_data():
 
     return master_data
 
-def get_master_data():
-    data = np.array(make_master_data())
+def get_master_data(path):
+    data = np.array(make_master_data(path))
     data = data.astype(float)
     
     X = data[:,:-1]
@@ -58,9 +58,11 @@ def split_data(X, y):
 
     return train_X, train_y, val_X, val_y, test_X, test_y
 
-def main():
+# Takes the directory path of the training CSV data and a string to add 
+# to the file name of output classifier
+def main(path = 'EMG_Training_Data', classifier_name = '1'):
     num_classes = 3
-    X, y = get_master_data()
+    X, y = get_master_data(path)
     train_X, train_y, val_X, val_y, test_X, test_y = split_data(X, y)
 
     # hyperparams
@@ -102,7 +104,10 @@ def main():
     test_accuracy = np.mean(y_pred_test == test_y)
 
     print('This test accuracy: ' + str(test_accuracy))
-    best_model.toFile('Linear_Classifier/linear_classifier_1_' + str(int(test_accuracy*100)) + 'p.csv')
+    best_model.toFile(
+            'Linear_Classifier/linear_classifier_' + 
+            classifier_name + '_' + str(int(test_accuracy*100)) +
+            'p.csv')
 
 if __name__ == '__main__':
-    main()
+    main(argv[1], argv[2])
