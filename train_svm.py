@@ -60,7 +60,7 @@ def split_data(X, y):
 
 # Takes the directory path of the training CSV data and a string to add 
 # to the file name of output classifier
-def main(path = 'EMG_Training_Data', classifier_name = '1'):
+def main(path, classifier_name):
     num_classes = 3
     X, y = get_master_data(path)
     train_X, train_y, val_X, val_y, test_X, test_y = split_data(X, y)
@@ -106,8 +106,15 @@ def main(path = 'EMG_Training_Data', classifier_name = '1'):
     print('This test accuracy: ' + str(test_accuracy))
     best_model.toFile(
             'Linear_Classifier/linear_classifier_' + 
-            classifier_name + '_' + str(int(test_accuracy*100)) +
-            'p.csv')
+            classifier_name + '.csv')
 
 if __name__ == '__main__':
-    main(argv[1], argv[2])
+    if len(argv) < 2:
+        path = 'EMG_Training_Data'
+    else: path = argv[1]
+
+    if len(argv) < 3:
+        name = "1"
+    else: name = argv[2]
+
+    main(path, name)
