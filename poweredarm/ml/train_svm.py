@@ -2,9 +2,13 @@ import os
 import csv
 from sys import argv
 import numpy as np
-from Linear_Classifier.linear_classifier import LinearClassifier
 
+from poweredarm.utils.datapaths import *
+from poweredarm.ml.linear_classifier import LinearClassifier
+
+# Input data directory path must be relative to Poweredarm/data
 def make_master_data(path):
+    path = os.path.join('data', path)
     csv_files = (os.path.join(path, name) for name in os.listdir(path) if name.lower().endswith('.csv'))
     master_data = []
 
@@ -53,7 +57,6 @@ def split_data(X, y):
     test_X = np.delete(X,val_idx,axis=0)
     test_y = np.delete(y,val_idx,axis=0)
 
-    print('Shapes for Chad\'s comfort')
     print(train_X.shape, train_y.shape, val_X.shape, val_y.shape, test_X.shape, test_y.shape)
 
     return train_X, train_y, val_X, val_y, test_X, test_y
@@ -104,13 +107,11 @@ def main(path, classifier_name):
     test_accuracy = np.mean(y_pred_test == test_y)
 
     print('This test accuracy: ' + str(test_accuracy))
-    best_model.toFile(
-            'Linear_Classifier/linear_classifier_' + 
-            classifier_name + '.csv')
+    best_model.toFile(classifier_path(classifier_name))
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        path = 'EMG_Training_Data'
+        path = emg_training_dirname()
     else: path = argv[1]
 
     if len(argv) < 3:

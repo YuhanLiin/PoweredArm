@@ -1,15 +1,17 @@
-from Linear_Classifier import linear_classifier
-from scripts.common.gesture import Gesture
 import csv
 from sys import argv
 import numpy as np
 
-def classifier_path(name):
-    return 'Linear_Classifier/linear_classifier_' + name + '.csv'
+from poweredarm.utils.datapaths import *
+from poweredarm.ml.linear_classifier import LinearClassifier
+from poweredarm.utils.gesture import Gesture
+
+def classifier_filename(name):
+    return 'linear_classifier_' + name + '.csv'
      
 def get_classifier(name):
-    classifier = linear_classifier.LinearClassifier(9, len(Gesture))
-    classifier.fromFile(classifier_path(name))
+    classifier = LinearClassifier(9, len(Gesture))
+    classifier.fromFile(classifier_path(classifier_filename(name)))
     return classifier
 
 # Takes a CSV of sample EMG data (8 numbers per row) and predicts its
@@ -17,7 +19,7 @@ def get_classifier(name):
 def main(emg_path, name):
     classifier = get_classifier(name)
 
-    with open('Sample_Prediction_Data/' + emg_path, 'rb') as emg_file:
+    with open(sample_data_path(emg_path), 'rb') as emg_file:
         reader = csv.reader(emg_file)
         for row in reader:
             assert len(row) == 8
