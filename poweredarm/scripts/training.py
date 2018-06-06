@@ -4,7 +4,9 @@ import os
 import datetime
 import csv
 import numpy as np
-from .common.gesture import Gesture
+
+from poweredarm.utils.gesture import Gesture
+from poweredarm.utils.datapaths import *
 
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}

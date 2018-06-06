@@ -41,6 +41,7 @@ pMid = IO.PWM(midGPIO,50)
 pRing = IO.PWM(ringGPIO,50)
 pPinky = IO.PWM(pinkyGPIO,50)
 
+# Interfaces for all 4 of the below functions must exist
 def openGrip():
     pThumb.ChangeDutyCycle(thumbEx)
     pIndex.ChangeDutyCycle(indexEx)

@@ -4,8 +4,9 @@ import os
 import csv
 import numpy as np
 from Linear_Classifier import linear_classifier
-from mechanics import motors
-from .common.gesture import Gesture
+
+from poweredarm.mechanics import motors
+from poweredarm.utils.gesture import Gesture
 
 classifier = linear_classifier.LinearClassifier(9, len(Gesture))
 
