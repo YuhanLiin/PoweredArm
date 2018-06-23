@@ -3,12 +3,12 @@ import pdb
 import os
 import csv
 import numpy as np
-from Linear_Classifier import linear_classifier
 
-from poweredarm.mechanics import motors
-from poweredarm.utils.gesture import Gesture
+from ml.linear_classifier import LinearClassifier
+from mechanics import motors
+from utils.gesture import Gesture
 
-classifier = linear_classifier.LinearClassifier(9, len(Gesture))
+classifier = LinearClassifier(9, len(Gesture))
 
 # Control motors by gesture
 def do_gesture(gesture):

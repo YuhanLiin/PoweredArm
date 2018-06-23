@@ -2,6 +2,7 @@
 
 def classifier_dirname(): return 'Linear_Classifier/'
 def classifier_path(filename): return 'data/' + classifier_dirname() + filename
+def classifier_default_name(): return 'linear_classifier_1.csv'
 
 def sample_data_dirname(): return 'Sample_Prediction_Data/'
 def sample_data_path(filename): return 'data/' + sample_data_dirname() + filename

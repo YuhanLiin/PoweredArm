@@ -5,8 +5,8 @@ import datetime
 import csv
 import numpy as np
 
-from poweredarm.utils.gesture import Gesture
-from poweredarm.utils.datapaths import *
+from utils.gesture import Gesture
+from utils.datapaths import *
 
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
@@ -40,7 +40,8 @@ def onPeriodic():
         if (training_data['file'] != None):
                 training_data['file'].close()
 
-        training_data['file'] = open("EMG_Training_Data/"+gesture.name+'_'+datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S")+'.csv','w+')
+        filename = gesture.name + '_' + datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + 'csv'
+        training_data['file'] = open(emg_training_path(filaname))
         training_data['csv_writer'] = csv.writer(training_data['file'])
 
         myo.unlock("hold")

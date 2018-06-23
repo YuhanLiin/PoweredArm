@@ -3,13 +3,13 @@ import csv
 from sys import argv
 import numpy as np
 
-from poweredarm.utils.datapaths import *
-from poweredarm.ml.linear_classifier import LinearClassifier
+from utils.datapaths import *
+from ml.linear_classifier import LinearClassifier
 
 # Input data directory path must be relative to Poweredarm/data
 def make_master_data(path):
     path = os.path.join('data', path)
-    csv_files = (os.path.join(path, name) for name in os.listdir(path) if name.lower().endswith('.csv'))
+    csv_files = (os.path.join(path, classifier) for classifier in os.listdir(path) if classifier.lower().endswith('.csv'))
     master_data = []
 
     for csv_file in csv_files:
@@ -62,7 +62,7 @@ def split_data(X, y):
     return train_X, train_y, val_X, val_y, test_X, test_y
 
 # Takes the directory path of the training CSV data and a string to add 
-# to the file name of output classifier
+# to the file classifier of output classifier
 def main(path, classifier_name):
     num_classes = 3
     X, y = get_master_data(path)
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     else: path = argv[1]
 
     if len(argv) < 3:
-        name = "1"
-    else: name = argv[2]
+        classifier = classifier_default_name()
+    else: classifier = argv[2]
 
-    main(path, name)
+    main(path, classifier)
