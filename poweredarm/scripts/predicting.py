@@ -5,25 +5,20 @@ import csv
 import numpy as np
 
 from ml.linear_classifier import LinearClassifier
+from ml import use_svm
 from mechanics import motors
 from utils.gesture import Gesture
 from utils.datapaths import *
 
+# There will always be as many classes as there are gestures
 classifier = LinearClassifier(9, len(Gesture))
 
 # Main emg processing function
 def proc_emg(emg, moving, times = []):    
-    # Put a 1 onto the end of the EMG array
-    emg_features = np.array(list(emg)).astype(float)
-    emg_features /= 1000.0
-    add_one = np.ones((1,9))
-    add_one[0,:-1] = emg_features
-    
-    emg_features = add_one
-    gesture = classifier.predict(emg_features)[0]
-    print (gesture)
+    gesture = use_svm.get_gesture(emg, classifier)
     motors.do_gesture(gesture)
 
+    print(str(emg) + ' ' + str(Gesture(gesture).name))
 
 # onPeriodic() is called periodically while the myo is connected.
 

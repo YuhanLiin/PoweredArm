@@ -1,9 +1,8 @@
-# Beowulf-EMG-Classification
-Gesture Classification Algorithms
-
 ### Current state of this repo:
 
 PyoManager library is used to collect EMG data from the Myo, which is connected to the Raspberry Pi via bluetooth.
+
+Currently supported gestures are: flex grip, open hand, relaxed hand, and key grip.
 
 There are currently two convenience scripts available. The **train\_svm** script aggregates all csv files produced by the training phase of the Myo script into a linear classifier file. The **use\_svm** scripts applies a linear classifier onto a file of sample EMG data and prints out the gesture predicted for each row. Both scripts must be invoked from the /poweredarm directory as such:
 
