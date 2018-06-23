@@ -1,3 +1,4 @@
+import atexit
 import math
 import pdb
 import os
@@ -11,9 +12,9 @@ from utils.datapaths import *
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
 
-gesture = Gesture.Flex
+gesture = Gesture.Open
 
-# Display emg data in human-readable way (Unused for now)
+# Display emg data in human-readable way 
 def print_emg(emg):
     secondsSinceStart = (datetime.datetime.now().second-start_time.second+60)%60
 
@@ -37,20 +38,19 @@ def onPeriodic():
 
     # If myo is locked, unlock it and initialize script variables
     if not(myo.isUnlocked()):
-        if (training_data['file'] != None):
-                training_data['file'].close()
+        cleanup()
 
-        filename = gesture.name + '_' + datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + 'csv'
-        training_data['file'] = open(emg_training_path(filaname))
+        filename = gesture.name + '_' + datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.csv'
+        training_data['file'] = open(emg_training_path(filename), 'w')
         training_data['csv_writer'] = csv.writer(training_data['file'])
 
+        atexit.register(cleanup)
         myo.unlock("hold")
         myo.start_raw()
         myo.add_emg_handler(proc_emg)
 
+# CSV file will always be closed when PyoConnect exits
+def cleanup():
+    if (training_data['file'] != None):
+        training_data['file'].close()
 
-
-def onUnlock():
-	print("onUnlock")
-	myo.rotSetCenter()
-	myo.unlock("hold")

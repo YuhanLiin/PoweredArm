@@ -17,12 +17,12 @@ There are currently two convenience scripts available. The **train\_svm** script
 
 Note that if only one argument is provided, then it will go to the first argument while the second argument uses the default.
 ***
-### Gesture recognition is split into three tasks: data collection, training, and prediction.
+### Gesture recognition is split into two PyoConnect tasks: training and prediction.
 
-In the __data collection__ stage, the script is modified so that it simply reads the EMG data and writes it to a file. Before collecting the data, the tester and the user must agree on a gesture to perform. The tester then sets the variable `gesture` in the PyoManager training script to said gesture, the user performs said gesture, and the tester runs the program to collect samples.
-The samples will be written to timestamped CSV files, with the first 8 columns representing the emg data as floats and the final column will be an integer representing the gesture being performed.
+In the __training__ stage, the script is modified so that it simply reads the EMG data and writes it to a file. Before collecting the data, the tester and the user must agree on a gesture to perform. The tester then sets the variable `gesture` in the PyoManager training script to said gesture, the user performs said gesture, and the tester runs the program to collect samples.
+The samples will be written to timestamped CSV files, with the first 8 columns representing the emg data as floats and the final column will be an integer representing the gesture being performed. Run the `train_svm` script afterwards (no arguments) to create a linear classifier from the collected data.
 
-In the __training__ stage, the data is amalgamated into one master collection and fed into the `train()` method of a Classifier. train_svm.py does this on an example linear classifier.
-Once the classifier has been trained and tested using proper practices, it can be used for gesture prediction. To do this, simply call the `toFile()` method of the classifier once it has been trained and tests with sufficient accuracy (train_svm.py handles this).
 
 In the __prediction__ stage, a classifier is loaded from file using the `fromFile()` method. It can then be inserted into the PyoManager predicting script, which accepts new emg data from the Myo and can return its prediction as to the associated gesture.
+
+To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
