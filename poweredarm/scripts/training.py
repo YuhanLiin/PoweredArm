@@ -12,7 +12,7 @@ from utils.datapaths import *
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
 
-gesture = Gesture.Open
+gesture = Gesture.Key
 
 # Display emg data in human-readable way 
 def print_emg(emg):

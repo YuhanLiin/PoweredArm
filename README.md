@@ -26,3 +26,6 @@ The samples will be written to timestamped CSV files, with the first 8 columns r
 In the __prediction__ stage, a classifier is loaded from file using the `fromFile()` method. It can then be inserted into the PyoManager predicting script, which accepts new emg data from the Myo and can return its prediction as to the associated gesture.
 
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
+
+### Caveats
+The emg data produced by the myo_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch.

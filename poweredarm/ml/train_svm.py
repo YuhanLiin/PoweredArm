@@ -4,6 +4,7 @@ from sys import argv
 import numpy as np
 
 from utils.datapaths import *
+from utils.gesture import Gesture
 from ml.linear_classifier import LinearClassifier
 
 # Input data directory path must be relative to Poweredarm/data
@@ -64,7 +65,7 @@ def split_data(X, y):
 # Takes the directory path of the training CSV data and a string to add 
 # to the file classifier of output classifier
 def main(path, classifier_name):
-    num_classes = 3
+    num_classes = len(Gesture)
     X, y = get_master_data(path)
     train_X, train_y, val_X, val_y, test_X, test_y = split_data(X, y)
 

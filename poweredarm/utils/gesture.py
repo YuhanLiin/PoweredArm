@@ -6,5 +6,5 @@ class Gesture(Enum):
     Rest = 0
     Grip = 1
     Open = 2
-    #TODO Key
+    Key = 3
 
