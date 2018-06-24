@@ -12,7 +12,7 @@ from utils.datapaths import *
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
 
-gesture = Gesture.Key
+gesture = Gesture.Rest
 
 # Display emg data in human-readable way 
 def print_emg(emg):
@@ -51,6 +51,7 @@ def onPeriodic():
 
 # CSV file will always be closed when PyoConnect exits
 def cleanup():
+    print("clean")
     if (training_data['file'] != None):
         training_data['file'].close()
 

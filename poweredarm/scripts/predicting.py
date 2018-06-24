@@ -21,7 +21,7 @@ def proc_emg(emg, moving, times = []):
     
     emg_features = add_one
     gesture = classifier.predict(emg_features)[0]
-    print (gesture)
+    print (Gesture(gesture).name)
     motors.do_gesture(gesture)
 
 
