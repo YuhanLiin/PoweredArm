@@ -25,3 +25,10 @@ The samples will be written to timestamped CSV files, with the first 8 columns r
 In the __prediction__ stage, a classifier is loaded from file using the `fromFile()` method. It can then be inserted into the PyoManager predicting script, which accepts new emg data from the Myo and can return its prediction as to the associated gesture.
 
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
+
+### New EMG Format Branch
+Apparently the version of myo_raw on the main branch doesn't actually produce raw emg values, but instead produces a rectified signal representing the amplitude of the signals (see [this](https://github.com/Alvipe/myo-raw/commit/680775071d0dd4defb88b35f91d9122c0645eedb) for more details). This means that the data and thus the classifier produced by the main branch is not compatible with emg samples produced from outside sources such as MyoConnect, since those sources use the raw signals.
+
+In this branch I've swapped out the myo_raw library we use with a fork that produces the raw emg values instead, in an effort to enable usage of external sample data. Classifiers made using this data, however, have significantly lower accuracy (~34%) and are therefore unuseable. This needs to be fixed before going into main.
+
+The raw emg data ranges from -128 to 127 while the rectified data is >0 and has gone >500. This range difference is likely the cause of the issue, though I don't know why the linear classifier is unable to handle it.
