@@ -6,6 +6,7 @@ class LinearClassifier:
     def __init__(self, num_dim, num_classes):
         std = 0.001
 
+        # Compute Weight matrix with random values (dim x classes)
         self.W = std * np.random.randn(num_dim*num_classes)
         self.W = self.W.reshape((num_dim,num_classes))
         
@@ -15,6 +16,7 @@ class LinearClassifier:
         num_classes = self.W.shape[1]
         num_train = X.shape[0]
 
+        # X is (sample_size x dim), so scores is (sample_Size x classes)
         scores = np.dot(X, self.W)
         scores -= np.max(scores, axis=1, keepdims=True)
 

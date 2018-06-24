@@ -12,7 +12,8 @@ from utils.datapaths import *
 start_time = datetime.datetime.now()
 training_data = {'file':None, 'csv_writer':None}
 
-gesture = Gesture.Open
+# Change this variable to change the gesturing we'll be training for
+gesture = Gesture.Grip
 
 # Display emg data in human-readable way 
 def print_emg(emg):
@@ -20,7 +21,7 @@ def print_emg(emg):
 
     os.system('clear')
     for datum in emg:
-            print('[' + '*'*int(datum/100))
+            print('[' + '*'*abs(datum))
     print ("EMG: " + str(emg) + " Seconds: " + str(secondsSinceStart))
 
 # Main emg processing function
