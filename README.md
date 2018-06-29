@@ -16,7 +16,11 @@ There are currently two convenience scripts available. The **train\_svm** script
 * **linear\_classifier\_name:** The filename of the classifier used for this prediction. Default is linear\_classifier\_1.csv.
 
 Note that if only one argument is provided, then it will go to the first argument while the second argument uses the default.
-***
+
+To make sample data, call `python -m helpers.make_sample [training_path] [sample_name]`
+* **training\_path:** The path, relative to /poweredarm, to the training csv data we wish to convert to sample data.
+* **sample\_name:** Name of the sample file to create. The same argument can be passed into use\_svm. Default is sample.csv.
+**
 ### Gesture recognition is split into two PyoConnect tasks: training and prediction.
 
 In the __training__ stage, the script is modified so that it simply reads the EMG data and writes it to a file. Before collecting the data, the tester and the user must agree on a gesture to perform. The tester then sets the variable `gesture` in the PyoManager training script to said gesture, the user performs said gesture, and the tester runs the program to collect samples.
@@ -27,5 +31,6 @@ In the __prediction__ stage, a classifier is loaded from file using the `fromFil
 
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
 
-### Caveats
-The emg data produced by the myo_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch.
+### Issues
+The emg data produced by the myo/_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch. **Not important right now**
+
