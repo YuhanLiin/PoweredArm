@@ -31,7 +31,24 @@ In the __prediction__ stage, a classifier is loaded from file using the `fromFil
 
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
 
+### Connecting to the Pi
+These instructions pertain to my Ubuntu 18.04 laptop and Marc's Pi 3 Model B, though I will try to provide instructions for a brand new Pi as well. An Ethernet port and cable are required. The result is a headless connection to the Pi that operates without connecting a separate monitor or keyboard.
+1. Power on the Pi and connect it to the laptop with an Ethernet cable.
+2. Install (sudo apt) nm-connection-editor and run it (on older versions of Ubuntu you can click the connection icon on the top right of the screen instead).
+3. Double-click "Wired Connection 1", go to "IPv4 Settings", and change the Method to "Shared to other Computers". Apply changes.
+4. Enter "cat /var/lib/misc/dnsmasq.leases" to get the IP address of the Pi.
+5. Enter "ssh pi@<ip-address>" to establish SSH connection. The default password should be **raspberry**, though on Marc's pi it's **poweredarm**.
+6. In SSH you can access the Pi's entire filesystem. On Marc's Pi the repo is cloned at /home/pi/BioTron/PoweredArm, which contains a git repo with the origin pointing to my Github repo. Pull to get the latest version. On a new Pi you will have to clone the repo yourself.
+
+## VNC connection
+This is necessary because with the Myo framework we have right now, it is not possible to run the Gesture recognition without the UI. In the future we hope to run all the code from SSH alone.
+1. Download VNC viewer on your laptop.
+2. SSH into the Pi and install realvnc-vnc-server.
+3. Enter "vncserver" on the Pi to start the VNC server. There should be a line at the bottom with "New desktop is raspberrypi:<some-number>". The number is the VNC virtual screen number. You will need to do this for every reboot.
+4. Open VNC viewer and type in <ip-address>:<screen-number> (10.42.0.162:2, for example). You will be prompted to enter a username and password. The username is **pi** and the password is the same for SSH. Now you can access the Pi's desktop UI from your laptop.
+
 ### Issues
 The emg data produced by the myo_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch. **(Not important right now)**
 
 Key grip sometimes is mistaken for open hand.
+
