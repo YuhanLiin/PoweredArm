@@ -32,6 +32,6 @@ In the __prediction__ stage, a classifier is loaded from file using the `fromFil
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
 
 ### Issues
-The emg data produced by the myo/_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch. **(Not important right now)**
+The emg data produced by the myo_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch. **(Not important right now)**
 
 Key grip sometimes is mistaken for open hand.
