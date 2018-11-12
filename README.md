@@ -1,6 +1,3 @@
-# Beowulf-EMG-Classification
-Gesture Classification Algorithms
-
 ### Current state of this repo:
 
 PyoManager library is used to collect EMG data from the Myo, which is connected to the Raspberry Pi via bluetooth.
@@ -31,6 +28,7 @@ In the __prediction__ stage, a classifier is loaded from file using the `fromFil
 
 To run PyoConnect, go into /poweredarm and run `python PyoManager.pyc` (sudo may be required to access the serial port). Then enable either one of the options and press Connect Myo to get started. If an option cannot be turned on, its corresponding script is likely invalid. An easy way to debug this is to call the script directly via `python -m scripts.<name_of_script>`.
 
+## RPi Usage
 ### Connecting to the Pi
 These instructions pertain to my Ubuntu 18.04 laptop and Marc's Pi 3 Model B, though I will try to provide instructions for a brand new Pi as well. An Ethernet port and cable are required. The result is a headless connection to the Pi that operates without connecting a separate monitor or keyboard.
 1. Power on the Pi and connect it to the laptop with an Ethernet cable.
@@ -46,6 +44,26 @@ This is necessary because with the Myo framework we have right now, it is not po
 2. SSH into the Pi and install realvnc-vnc-server.
 3. Enter "vncserver" on the Pi to start the VNC server. There should be a line at the bottom with "New desktop is raspberrypi:<some-number>". The number is the VNC virtual screen number. You will need to do this for every reboot.
 4. Open VNC viewer and type in <ip-address>:<screen-number> (10.42.0.162:2, for example). You will be prompted to enter a username and password. The username is **pi** and the password is the same for SSH. Now you can access the Pi's desktop UI from your laptop.
+
+## PocketBeagle Usage
+### Connecting to the PocketBeagle
+The PocketBeagle allows connection via USB-to-microUSB and is capable of Internet connection and can drive servos and run the above machine-learning scripts. It has no BLE, so it can't connect to the Myo. The below instructions apply to my PocketBeagle.
+1. Connect the Beagle to a laptop.
+2. Establish SSH connection with something like "ssh" or PUTTY. Address is debian@192.168.6.2 or debian@192.168.7.2. Password is "temppwd".
+3. Once you're in the Beagle, type "cd PoweredArm/poweredarm/mechanics" to go to that directory. Then type "python servo.py" to run the servo testing script.
+
+To change the code on the Beagle, you can either edit directly with vim (the .vimrc file has my own bindings, so feel free to change them) or change your local copy of the code, commit it to GitHub, then call "git pull" on the Beagle. To do so, your GitHub account needs to be a collaborator on the repo (ask me and I'll add you) and you need to change the git user on the Beagle to yourself. Type:
+* git config --global user.name "\<Your name\>"
+* git config --global user.email "\<Your email\>"
+
+### PocketBeagle Wiring and Servo Usage
+The pin setup for the PocketBeagle is shown below.
+![Pin setup](https://www.element14.com/community/servlet/JiveServlet/showImage/105-117543-480592/PocketBeagle_pinout.png)
+Note that the layout assumes the Beagle is laying with its USB port at the top. To connect servos, connect red and brown wires to the 3.3V and GND pins respectively (These 2 can be shared amongst multiple servos). The orange wire must be connected to one of the PWM pins. The mapping between the Beagle pin # and the PWM # used by the servo script is as such:
+* P1_36 = PWM 0
+* P1_33 = PWM 1
+* P2_01 = PWM 2
+* P2_03 = PWM 3
 
 ### Issues
 The emg data produced by the myo_raw library we're currently using is not compatible with myo emg data produced from outside sources, such as MyoConnect. As such all sample data must be produced from this repo. A fix for this is in progress on the new-emg-format branch. **(Not important right now)**
