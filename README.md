@@ -55,6 +55,7 @@ The PocketBeagle allows connection via USB-to-microUSB and is capable of Interne
 To change the code on the Beagle, you can either edit directly with vim (the .vimrc file has my own bindings, so feel free to change them) or change your local copy of the code, commit it to GitHub, then call "git pull" on the Beagle. To do so, your GitHub account needs to be a collaborator on the repo (ask me and I'll add you) and you need to change the git user on the Beagle to yourself. Type:
 * git config --global user.name "\<Your name\>"
 * git config --global user.email "\<Your email\>"
+Alternatively, you can also copy the changed files from your computer onto the board through the USB connection with a command like "scp".
 
 ### PocketBeagle Wiring and Servo Usage
 The pin setup for the PocketBeagle is shown below.
